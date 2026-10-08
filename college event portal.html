@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusConnect - College Event Portal</title>
+
+    <style>
+        /* =========================
+           GLOBAL STYLES
+        ========================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: #1d2671;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #1d2671;
+            color: white;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #c33764;
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #1d2671;
+        }
+
+        .logo span {
+            color: #c33764;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            color: #333;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #c33764;
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           HERO / HOME
+        ========================== */
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            background:
+                linear-gradient(
+                    rgba(29,38,113,0.85),
+                    rgba(195,55,100,0.85)
+                ),
+                url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80")
+                center/cover;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 55px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 19px;
+            margin-bottom: 30px;
+        }
+
+        .hero .btn {
+            background: white;
+            color: #1d2671;
+            margin-right: 10px;
+        }
+
+        .hero .btn:hover {
+            background: #111;
+            color: white;
+        }
+
+
+        /* =========================
+           EVENTS
+        ========================== */
+
+        .events-section {
+            background: white;
+        }
+
+        .event-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .event-controls input,
+        .event-controls select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            min-width: 220px;
+            outline: none;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .event-image {
+            height: 190px;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 22px;
+        }
+
+        .event-date {
+            color: #c33764;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .event-content h3 {
+            color: #1d2671;
+            margin-bottom: 10px;
+        }
+
+        .event-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .event-info {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================
+           ABOUT / FEATURES
+        ========================== */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .feature-card {
+            text-align: center;
+            background: white;
+            padding: 35px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        }
+
+        .feature-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #1d2671;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+
+        /* =========================
+           REGISTRATION
+        ========================== */
+
+        .registration {
+            background: #eef1ff;
+        }
+
+        .form-container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+
+        /* =========================
+           GALLERY
+        ========================== */
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            height: 220px;
+        }
+
+        .gallery-item img {
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+
+        /* =========================
+           CONTACT
+        ========================== */
+
+        .contact-section {
+            background: white;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-info h3 {
+            color: #1d2671;
+            margin-bottom: 20px;
+            font-size: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-item-icon {
+            font-size: 25px;
+        }
+
+        .contact-item h4 {
+            color: #333;
+        }
+
+        .contact-item p {
+            color: #666;
+        }
+
+        .contact-form {
+            background: #f5f7fb;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        footer {
+            background: #151a4b;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 15px;
+        }
+
+        .footer-col p {
+            color: #ccc;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+
+        .footer-links li:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 20px;
+            color: #ccc;
+        }
+
+
+        /* =========================
+           RESPONSIVE DESIGN
+        ========================== */
+
+        @media (max-width: 992px) {
+
+            .event-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 45px;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                text-align: center;
+                gap: 0;
+                transition: 0.3s;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 80vh;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 25px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+
+            .hero .btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
+    <header>
+
+        <div class="container">
+
+            <nav>
+
+                <div class="logo">
+                    Campus<span>Connect</span>
+                </div>
+
+                <div class="menu-btn" onclick="toggleMenu()">
+                    ☰
+                </div>
+
+                <ul class="nav-links" id="navLinks">
+
+                    <li>
+                        <a href="#home" onclick="closeMenu()">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="#events" onclick="closeMenu()">Events</a>
+                    </li>
+
+                    <li>
+                        <a href="#register" onclick="closeMenu()">Register</a>
+                    </li>
+
+                    <li>
+                        <a href="#gallery" onclick="closeMenu()">Gallery</a>
+                    </li>
+
+                    <li>
+                        <a href="#contact" onclick="closeMenu()">Contact</a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         HOME
+    ========================== -->
+
+    <section class="hero" id="home">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <h1>
+                    Discover. Participate. Celebrate.
+                </h1>
+
+                <p>
+                    Welcome to CampusConnect, your one-stop destination
+                    for discovering and participating in exciting college
+                    events, workshops, competitions and cultural programs.
+                </p>
+
+                <a href="#events" class="btn">
+                    Explore Events
+                </a>
+
+                <a href="#register" class="btn">
+                    Register Now
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURES
+    ========================== -->
+
+    <section class="section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>Why CampusConnect?</h2>
+
+                <p>
+                    Everything you need to stay connected with campus life.
+                </p>
+
+            </div>
+
+            <div class="features">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">📅</div>
+
+                    <h3>Discover Events</h3>
+
+                    <p>
+                        Find technical, cultural, sports and academic
+                        events happening on campus.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">📝</div>
+
+                    <h3>Easy Registration</h3>
+
+                    <p>
+                        Register for your favorite events quickly using
+                        our simple online registration form.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">🏆</div>
+
+                    <h3>Show Your Talent</h3>
+
+                    <p>
+                        Participate in competitions and showcase your
+                        skills to the college community.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         EVENTS
+    ========================== -->
+
+    <section class="section events-section" id="events">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>Upcoming Events</h2>
+
+                <p>
+                    Explore the latest events happening at our college.
+                </p>
+
+            </div>
+
+
+            <div class="event-controls">
+
+                <input
+                    type="text"
+                    id="searchEvent"
+                    placeholder="Search events..."
+                    onkeyup="filterEvents()"
+                >
+
+                <select id="categoryFilter" onchange="filterEvents()">
+
+                    <option value="all">
+                        All Categories
+                    </option>
+
+                    <option value="technical">
+                        Technical
+                    </option>
+
+                    <option value="cultural">
+                        Cultural
+                    </option>
+
+                    <option value="sports">
+                        Sports
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="event-grid" id="eventGrid">
+
+
+                <!-- EVENT 1 -->
+
+                <div class="event-card"
+                     data-category="technical"
+                     data-name="TechFest 2026">
+
+                    <img
+                        class="event-image"
+                        src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80"
+                        alt="Technology Event"
+                    >
+
+                    <div class="event-content">
+
+                        <div class="event-date">
+                            📅 October 20, 2026
+                        </div>
+
+                        <h3>TechFest 2026</h3>
+
+                        <p>
+                            A national-level technical festival featuring
+                            coding, robotics and innovation challenges.
+                        </p>
+
+                        <div class="event-info">
+                            📍 Main Auditorium
+                        </div>
+
+                        <a href="#register" class="btn">
+                            Register
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 2 -->
+
+                <div class="event-card"
+                     data-category="cultural"
+                     data-name="Cultural Fiesta">
+
+                    <img
+                        class="event-image"
+                        src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80"
+                        alt="Cultural Event"
+                    >
+
+                    <div class="event-content">
+
+                        <div class="event-date">
+                            📅 November 05, 2026
+                        </div>
+
+                        <h3>Cultural Fiesta</h3>
+
+                        <p>
+                            Celebrate music, dance, art and culture with
+                            students from across the campus.
+                        </p>
+
+                        <div class="event-info">
+                            📍 College Ground
+                        </div>
+
+                        <a href="#register" class="btn">
+                            Register
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 3 -->
+
+                <div class="event-card"
+                     data-category="sports"
+                     data-name="Inter College Sports Meet">
+
+                    <img
+                        class="event-image"
+                        src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80"
+                        alt="Sports Event"
+                    >
+
+                    <div class="event-content">
+
+                        <div class="event-date">
+                            📅 November 18, 2026
+                        </div>
+
+                        <h3>Sports Meet</h3>
+
+                        <p>
+                            Compete in cricket, football, volleyball,
+                            athletics and many more sporting events.
+                        </p>
+
+                        <div class="event-info">
+                            📍 Sports Complex
+                        </div>
+
+                        <a href="#register" class="btn">
+                            Register
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 4 -->
+
+                <div class="event-card"
+                     data-category="technical"
+                     data-name="AI Innovation Workshop">
+
+                    <img
+                        class="event-image"
+                        src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80"
+                        alt="AI Workshop"
+                    >
+
+                    <div class="event-content">
+
+                        <div class="event-date">
+                            📅 December 02, 2026
+                        </div>
+
+                        <h3>AI Innovation Workshop</h3>
+
+                        <p>
+                            Learn about artificial intelligence,
+                            machine learning and modern technologies.
+                        </p>
+
+                        <div class="event-info">
+                            📍 Computer Science Lab
+                        </div>
+
+                        <a href="#register" class="btn">
+                            Register
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 5 -->
+
+                <div class="event-card"
+                     data-category="cultural"
+                     data-name="Battle of Bands">
+
+                    <img
+                        class="event-image"
+                        src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=800&q=80"
+                        alt="Music Event"
+                    >
+
+                    <div class="event-content">
+
+                        <div class="event-date">
+                            📅 December 10, 2026
+                        </div>
+
+                        <h3>Battle of Bands</h3>
+
+                        <p>
+                            An exciting music competition featuring
+                            talented college bands.
+                        </p>
+
+                        <div class="event-info">
+                            📍 Open Air Theatre
+                        </div>
+
+                        <a href="#register" class="btn">
+                            Register
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EVENT 6 -->
+
+                <div class="event-card"
+                     data-category="technical"
+                     data-name="Hackathon">
+
+                    <img
+                        class="event-image"
+                        src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80"
+                        alt="Hackathon"
+                    >
+
+                    <div class="event-content">
+
+                        <div class="event-date">
+                            📅 December 20, 2026
+                        </div>
+
+                        <h3>24-Hour Hackathon</h3>
+
+                        <p>
+                            Build innovative solutions and compete with
+                            talented developers from different colleges.
+                        </p>
+
+                        <div class="event-info">
+                            📍 Innovation Center
+                        </div>
+
+                        <a href="#register" class="btn">
+                            Register
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         REGISTRATION
+    ========================== -->
+
+    <section class="section registration" id="register">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>Event Registration</h2>
+
+                <p>
+                    Fill out the form to participate in an event.
+                </p>
+
+            </div>
+
+
+            <div class="form-container">
+
+                <div class="success-message" id="successMessage">
+
+                    ✅ Registration successful!
+                    We look forward to seeing you at the event.
+
+                </div>
+
+
+                <form id="registrationForm">
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="Enter phone number"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Department
+                        </label>
+
+                        <select id="department" required>
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option>
+                                Computer Science
+                            </option>
+
+                            <option>
+                                Information Technology
+                            </option>
+
+                            <option>
+                                Electronics
+                            </option>
+
+                            <option>
+                                Mechanical
+                            </option>
+
+                            <option>
+                                Civil
+                            </option>
+
+                            <option>
+                                Commerce
+                            </option>
+
+                            <option>
+                                Arts
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="event">
+                            Select Event
+                        </label>
+
+                        <select id="event" required>
+
+                            <option value="">
+                                Choose Event
+                            </option>
+
+                            <option>
+                                TechFest 2026
+                            </option>
+
+                            <option>
+                                Cultural Fiesta
+                            </option>
+
+                            <option>
+                                Sports Meet
+                            </option>
+
+                            <option>
+                                AI Innovation Workshop
+                            </option>
+
+                            <option>
+                                Battle of Bands
+                            </option>
+
+                            <option>
+                                24-Hour Hackathon
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="message">
+                            Message
+                        </label>
+
+                        <textarea
+                            id="message"
+                            placeholder="Any additional information..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Submit Registration
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GALLERY
+    ========================== -->
+
+    <section class="section" id="gallery">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>Event Gallery</h2>
+
+                <p>
+                    Memories from our college events.
+                </p>
+
+            </div>
+
+
+            <div class="gallery">
+
+                <div class="gallery-item">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80"
+                        alt="College Event"
+                    >
+
+                </div>
+
+
+                <div class="gallery-item">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80"
+                        alt="Students Event"
+                    >
+
+                </div>
+
+
+                <div class="gallery-item">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
+                        alt="Conference"
+                    >
+
+                </div>
+
+
+                <div class="gallery-item">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=800&q=80"
+                        alt="Music Event"
+                    >
+
+                </div>
+
+
+                <div class="gallery-item">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=800&q=80"
+                        alt="Celebration"
+                    >
+
+                </div>
+
+
+                <div class="gallery-item">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=800&q=80"
+                        alt="Festival"
+                    >
+
+                </div>
+
+
+                <div class="gallery-item">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=800&q=80"
+                        alt="Students"
+                    >
+
+                </div>
+
+
+                <div class="gallery-item">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80"
+                        alt="College Festival"
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section class="section contact-section" id="contact">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>Contact Us</h2>
+
+                <p>
+                    Have questions? Get in touch with us.
+                </p>
+
+            </div>
+
+
+            <div class="contact-wrapper">
+
+
+                <div class="contact-info">
+
+                    <h3>College Event Office</h3>
+
+
+                    <div class="contact-item">
+
+                        <div class="contact-item-icon">
+                            📍
+                        </div>
+
+                        <div>
+
+                            <h4>Address</h4>
+
+                            <p>
+                                CampusConnect College Campus,
+                                Chennai, Tamil Nadu, India
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <div class="contact-item-icon">
+                            📞
+                        </div>
+
+                        <div>
+
+                            <h4>Phone</h4>
+
+                            <p>
+                                +91 98765 43210
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <div class="contact-item-icon">
+                            ✉️
+                        </div>
+
+                        <div>
+
+                            <h4>Email</h4>
+
+                            <p>
+                                events@campusconnect.edu
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <div class="contact-item-icon">
+                            🕐
+                        </div>
+
+                        <div>
+
+                            <h4>Office Hours</h4>
+
+                            <p>
+                                Monday - Friday: 9:00 AM - 5:00 PM
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-form">
+
+                    <form id="contactForm">
+
+                        <div class="form-group">
+
+                            <label>
+                                Your Name
+                            </label>
+
+                            <input
+                                type="text"
+                                placeholder="Enter your name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Message
+                            </label>
+
+                            <textarea
+                                placeholder="Write your message..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn"
+                        >
+                            Send Message
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+
+                <div class="footer-col">
+
+                    <h3>CampusConnect</h3>
+
+                    <p>
+                        Your digital gateway to college events,
+                        activities and campus experiences.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-col">
+
+                    <h3>Quick Links</h3>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="#home">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="#events">Events</a>
+                        </li>
+
+                        <li>
+                            <a href="#register">Register</a>
+                        </li>
+
+                        <li>
+                            <a href="#gallery">Gallery</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="footer-col">
+
+                    <h3>Follow Us</h3>
+
+                    <ul class="footer-links">
+
+                        <li>Facebook</li>
+
+                        <li>Instagram</li>
+
+                        <li>LinkedIn</li>
+
+                        <li>Twitter / X</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <div class="copyright">
+
+                © 2026 CampusConnect.
+                All Rights Reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* Mobile Menu */
+
+        function toggleMenu() {
+
+            const navLinks =
+                document.getElementById("navLinks");
+
+            navLinks.classList.toggle("active");
+
+        }
+
+
+        function closeMenu() {
+
+            const navLinks =
+                document.getElementById("navLinks");
+
+            navLinks.classList.remove("active");
+
+        }
+
+
+        /* Event Search + Filter */
+
+        function filterEvents() {
+
+            const search =
+                document
+                .getElementById("searchEvent")
+                .value
+                .toLowerCase();
+
+            const category =
+                document
+                .getElementById("categoryFilter")
+                .value;
+
+            const cards =
+                document.querySelectorAll(".event-card");
+
+
+            cards.forEach(function(card) {
+
+                const name =
+                    card
+                    .getAttribute("data-name")
+                    .toLowerCase();
+
+                const cardCategory =
+                    card
+                    .getAttribute("data-category");
+
+
+                const matchesSearch =
+                    name.includes(search);
+
+                const matchesCategory =
+                    category === "all" ||
+                    cardCategory === category;
+
+
+                if (
+                    matchesSearch &&
+                    matchesCategory
+                ) {
+
+                    card.style.display = "block";
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+
+        /* Registration Form */
+
+        document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const success =
+                document
+                .getElementById("successMessage");
+
+
+            success.style.display = "block";
+
+
+            this.reset();
+
+
+            success.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        });
+
+
+        /* Contact Form */
+
+        document
+        .getElementById("contactForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            alert(
+                "Thank you! Your message has been sent successfully."
+            );
+
+
+            this.reset();
+
+        });
+
+    </script>
+
+</body>
+</html>
